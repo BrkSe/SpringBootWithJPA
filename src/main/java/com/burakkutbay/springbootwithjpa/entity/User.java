@@ -6,6 +6,7 @@ import org.hibernate.annotations.BatchSize;
 import org.springframework.context.annotation.Bean;
 
 import java.beans.BeanProperty;
+import java.time.LocalDateTime;
 
 //CODE - FIRST
 @Entity
@@ -18,7 +19,35 @@ public class User {
     private String name;
     private String surname;
 
+    //burada bir veritabanı ilişkisi var
+    @OneToOne(cascade = CascadeType.ALL)
+    private Adress adress;
 
+
+    /**
+     *  Java JPA Nesneler arasındaki
+     *  veri ilişkiler
+     *
+     *  OneToMany (Bire Çok ) User -> Adress
+     *  Bir entitnin başka bir entity ile birden fazla ilişkisi olduğu
+     *  Eğer User birden fazla adres değeri olasacaksa bunu kullancaz
+     *
+     *  ManyToMany (Çoka Çok) User <-> Roller (kimin admin var 10 kişi, rol tarafında ) (bir userin birden fazla rolü)
+     *  Her entitynin birbirleriyle birden fazla rolleri olabilir.
+     *
+     *  OneToOne (User=Adres)
+     *  Bir entitynin bir entitye bağımlılığı olur. bir ilişkilendirme.
+     *
+     */
+
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
 
     public String getName() {
         return name;

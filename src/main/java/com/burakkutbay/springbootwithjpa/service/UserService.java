@@ -48,4 +48,14 @@ public class UserService {
 //        User user = optionalUser.get();
 //        return user;
     }
+
+    public List<User> adinaGoreBul(String name){
+        List<User> allByName = iUserRepository.findAllByName(name);
+        return allByName;
+    }
+
+    public List<User> adaVeSoyadaGoreBul(String name,String surname){
+        List<User> userList=iUserRepository.findAllByNameAndSurname(name, surname);
+        return userList;
+    }
 }

@@ -39,19 +39,28 @@ public class UserController {
     }
 
     @GetMapping("/hepsiniBul")
-    public List<User> hepsiniBul(@RequestBody List<Integer> userIdList){
-        return  userService.findAllById(userIdList);
+    public List<User> hepsiniBul(@RequestBody List<Integer> userIdList) {
+        return userService.findAllById(userIdList);
     }
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity<String> kayitSil(@PathVariable Integer id){
+    public ResponseEntity<String> kayitSil(@PathVariable Integer id) {
 
         userService.deleteUser(id);
 
         return new ResponseEntity<>("Kayıt silindi", HttpStatus.ACCEPTED);
     }
 
-    //Iterable bak.
+    @GetMapping("/adagore/{name}")
+    public List<User> adaGoreHepsiniBul(@PathVariable String name) {
+        List<User> users = userService.adinaGoreBul(name);
+        return users;
+    }
 
+    @GetMapping("/adasoyadagore/{kriter1}/{kriter2}")
+    public List<User> adaSoyadaGoreAra(@PathVariable String name, @PathVariable String surname) {
+        List<User> userList = userService.adaVeSoyadaGoreBul(name, surname);
+        return userList;
+    }
 
 }
