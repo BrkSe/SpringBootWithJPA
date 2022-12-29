@@ -2,8 +2,12 @@ package com.burakkutbay.springbootwithjpa.service;
 
 import com.burakkutbay.springbootwithjpa.entity.User;
 import com.burakkutbay.springbootwithjpa.repository.IUserRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -11,15 +15,37 @@ public class UserService {
     @Autowired
     private IUserRepository iUserRepository;
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
         iUserRepository.save(user);
     }
 
-    public void deleteUser(User user){
-        iUserRepository.delete(user);
+
+
+    public long countUsers(){
+
+        long count = iUserRepository.count();
+        return count;
+
+//        return iUserRepository.count();
     }
 
-    public void findUser(Integer id){
-        iUserRepository.findById(id);
+    public void deleteUser(Integer id){
+        iUserRepository.deleteById(id);
+    }
+
+    public List<User> findAllById(List<Integer> idListesi){
+      return (List<User>) iUserRepository.findAllById(idListesi);
+    }
+
+    public User findUser(Integer id) {
+
+        return iUserRepository.findById(id).get();
+
+        //   User user =  iUserRepository.findById(id).get();
+        //   return user;
+
+//        Optional<User> optionalUser = iUserRepository.findById(id);
+//        User user = optionalUser.get();
+//        return user;
     }
 }
