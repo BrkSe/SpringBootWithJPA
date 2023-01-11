@@ -2,6 +2,7 @@ package com.burakkutbay.springbootwithjpa.controller;
 
 import com.burakkutbay.springbootwithjpa.entity.User;
 import com.burakkutbay.springbootwithjpa.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/save")
-    public void kaydet(@RequestBody User user) {
+    public ResponseEntity<User> kaydet(@RequestBody @Valid User user) {
         userService.saveUser(user);
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 
     @GetMapping("/find/{id}")
@@ -39,8 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/hepsiniBul")
-    public List<User> hepsiniBul(@RequestBody List<Integer> userIdList) {
-        return userService.findAllById(userIdList);
+    public ResponseEntity<List<User>> hepsiniBul(@RequestBody List<Integer> userIdList) {
+        return new ResponseEntity<>(userService.findAllById(userIdList),HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
